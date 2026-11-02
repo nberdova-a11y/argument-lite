@@ -41,10 +41,14 @@
       const n = body.dataset.wa; const url = (isSlot(n) ? "https://wa.me/" : "https://wa.me/" + digits(n)) + "?text=" + encodeURIComponent(message);
       window.open(url, "_blank", "noopener"); return;
     }
-    // Telegram и MAX не принимают готовый текст по ссылке: копируем его и открываем чат
+    // Telegram, MAX и ВКонтакте не принимают готовый текст по ссылке: копируем его и открываем чат
     try { await navigator.clipboard.writeText(message); } catch (_) {}
     const note = a.closest("form, .s-contacts")?.parentElement?.querySelector("[data-s-copied]") || document.querySelector("[data-s-copied]");
     if (note) { note.hidden = false; setTimeout(() => (note.hidden = true), 4000); }
+    if (kind === "vkontakte") {
+      const vk = body.dataset.vk;
+      window.open(vk && !isSlot(vk) ? String(vk) : "https://vk.com/", "_blank", "noopener"); return;
+    }
     const tg = body.dataset.tg; const user = isSlot(tg) ? "" : String(tg).replace(/^@|https?:\/\/t\.me\//g, "");
     window.open("https://t.me/" + user, "_blank", "noopener");
   });
