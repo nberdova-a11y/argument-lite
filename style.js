@@ -129,4 +129,29 @@
     };
     calc.addEventListener("input", update); calc.addEventListener("change", update); update();
   }
+
+  // ---- метка демо (на всех демо-сайтах): полоса сверху страницы + плавающая плашка на компьютере
+  if (!document.querySelector(".s-demo-badge")) {
+    const st = document.createElement("style");
+    st.textContent = [
+      ".s-demo-badge { position: relative; z-index: 60; margin: 0; padding: 8px 16px; text-align: center;",
+      "  font: 600 .82rem/1.35 var(--f-text, system-ui, sans-serif); letter-spacing: .02em;",
+      "  background: var(--c-accent, #c8a25c); color: var(--c-accent-ink, #1f170f); }",
+      ".s-demo-tag { position: fixed; right: 12px; bottom: 12px; z-index: 60; pointer-events: none;",
+      "  padding: 5px 10px; border-radius: 999px; font: 600 .72rem/1 var(--f-text, system-ui, sans-serif);",
+      "  background: var(--c-accent, #c8a25c); color: var(--c-accent-ink, #1f170f); opacity: .92;",
+      "  box-shadow: 0 2px 10px rgb(0 0 0 / .25); }",
+      "@media (max-width: 640px) { .s-demo-tag { display: none; } }"
+    ].join("\n");
+    document.head.appendChild(st);
+    const strip = document.createElement("p");
+    strip.className = "s-demo-badge";
+    strip.textContent = "Демо-проект, не официальный сайт";
+    body.insertBefore(strip, body.firstChild);
+    const tag = document.createElement("span");
+    tag.className = "s-demo-tag";
+    tag.setAttribute("aria-hidden", "true");
+    tag.textContent = "Демо";
+    body.appendChild(tag);
+  }
 })();
